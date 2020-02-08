@@ -1,26 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const passport = require("passport");
+const {gmailAuthPassport} = require("../resources/passport");
+const sendEmail = require('../resources/email');
 
-// const {loginGmail} = require('../controllers/authentication');
+router.use(gmailAuthPassport.initialize());
 
-router.get(
-    "/auth/google",
-    passport.authenticate("google", {
-      scope: [
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email"
-      ]
-    })
-  );
+//rota para abrir aba autenticacao gmail
+router.get("/auth/google",gmailAuthPassport.authenticate("google", 
+    {scope: ["https://www.googleapis.com/auth/userinfo.profile","https://www.googleapis.com/auth/userinfo.email"]})
+);
   
 // rota de retorno após autenticar no Google
-router.get('/auth/google/callback',passport.authenticate('google'),(request, response) => {response.status(200);});
+router.get('/auth/google/callback',gmailAuthPassport.authenticate('google',
+{scope: ["https://www.googleapis.com/auth/userinfo.profile","https://www.googleapis.com/auth/userinfo.email"]}), 
+  (request, response)=> {
+    const user = request._passport.session.user;
+    sendEmail(user)
+    .then(sucess => {
+      console.log(sucess)
+    })
+    .catch(err => {
+        console.log('error', err)
+    })
+
+    // response.send(user)
+
+    // console.log('rota',user)
+});
   
-  // fluxo de logout
+// fluxo de logout
 router.get('/auth/logout', (req, res) => {
   req.logout();
   res.status(200);
+  console.log(`off`)
 });
 
 module.exports={router}

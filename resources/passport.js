@@ -21,7 +21,9 @@ const gmailAuthPassport = passport.use(
             name: profile._json.name,
             email: profile._json.email,
             picture: profile._json.picture,
-            locale: profile._json.locale
+            locale: profile._json.locale,
+            authType: ["Google"],
+            password:''
           })
           .then(user => {
            done(null, user);
@@ -34,6 +36,7 @@ const gmailAuthPassport = passport.use(
     })
   }
 ));
+
 
 gmailAuthPassport.serializeUser((user, cb) => {
   cb(null, user);

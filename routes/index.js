@@ -15,17 +15,17 @@ router.get('/auth/google/callback',gmailAuthPassport.authenticate('google',
 {scope: ["https://www.googleapis.com/auth/userinfo.profile","https://www.googleapis.com/auth/userinfo.email"]}), 
   (request, response)=> {
     const user = request._passport.session.user;
-    // sendEmail(user)
-    // .then(sucess => {
-    //   console.log(sucess)
-    // })
-    // .catch(err => {
-    //     console.log('error', err)
-    // })
+    sendEmail(user)
+    .then(sucess => {
+      console.log(`############# iuhuuuhuhuhuhlllllll`, sucess)
+      response.send(sucess)
+    })
+    .catch(err => {
+        console.log('@@@@@@@@@@ -- error', err.response.body)
+    })
 
-    response.send(user)
 
-    // console.log('rota',user)
+    console.log('rota',user)
 });
 //rota para cadastro aplicação
 router.get("/createUser/aplication", createUser);

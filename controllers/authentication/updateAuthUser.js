@@ -11,7 +11,10 @@ const updateUser = (request, response) => {
 
     UserModel.findOne({'email': userObject.email})
     .then((user)=> {
-        UserModel.updateMany({"email": userObject.email}, {"$set": {password: userObject.password}, "$push": {authType: "APLICATION"}}, {safe: true, upsert: true})
+        const salt = bcrypt.genSaltSync(bcryptSalt);
+        const hashPass = bcrypt.hashSync(userObject.password, salt);
+        console.log(user)
+        UserModel.updateMany({"email": userObject.email}, {"$set": {password: hashPass}, "$push": {authType: "APLICATION"}}, {safe: true, upsert: true})
         .then((sucess)=> {
             response.status(200).json({message: "Senha cadastrada com sucesso :)", sucess})
         })

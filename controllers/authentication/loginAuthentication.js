@@ -17,7 +17,7 @@ const userAuthentication =  (request, response) => {
 
         user.authType.map(auth => {
             if(auth === 'Google' && auth !== 'APLICATION') {
-              return response.status(426).json({ message: "Usuario fez somente login pelo Gmail, necessario cadastrar senha ou entrar novamente pelo gmail :)" });
+              return response.status(426).json({ message: "Usuario fez login pelo Gmail, necessario cadastrar senha ou entrar novamente pelo gmail :)" });
             }
         })
 

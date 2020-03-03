@@ -59,7 +59,7 @@ io.on("connection", socket => {
           numberOrder: number + 1,
           order: food,
           tempoTotalInicial: food[0].time,
-          tempoTotalRestante: food[0].time
+          tempoTotalRestante: food[0].time,
         })
           .then(resp => {
             console.log(resp)

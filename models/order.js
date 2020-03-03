@@ -9,6 +9,7 @@ const OrderSchema = new Schema({
   statusPedido:  { type: String, default: 'realizado'},
   tempoTotalInicial: String,
   tempoTotalRestante: String,
+  mesa: {type: String, default: 'bancada'}
   // data: new Date().toString()
   // category: String,
   // name: Number,

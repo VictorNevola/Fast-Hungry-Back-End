@@ -29,7 +29,7 @@ const io = socketIo(server);
 io.on("connection", socket => {
 
   console.log("New client", socket.id);
-
+  // io.emit('up', { message: 'teste'});
   // Colocar uma função que o usuário chama quando finalizar o pedido e que manda o pedido para outra função que só a cozinha vai receber está ouvindo
   // exemplo https://www.freecodecamp.org/news/how-to-create-a-realtime-app-using-socket-io-react-node-mongodb-a10c4a1ab676/
 
@@ -62,6 +62,7 @@ io.on("connection", socket => {
           tempoTotalRestante: food[0].time,
         })
           .then(resp => {
+            io.sockets.emit('order', resp)
             console.log(resp)
           })
           .catch(error => {

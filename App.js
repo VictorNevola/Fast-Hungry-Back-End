@@ -1,18 +1,21 @@
 const express = require('express');
-const {router} = require(`./routes`);
+const { router } = require(`./routes`);
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const session = require('express-session');
-const {mongoConnect} = require(`./resources/mongo`);
+const { mongoConnect } = require(`./resources/mongo`);
 const http = require("http");
 const socketIo = require("socket.io");
 const app = express();
 const server = http.createServer(app);
+const { saveOrder } = require('./controllers/order/saveOrder');
+const { OrderModel } = require("./models/order");
+
 
 mongoConnect();
 app.use(cors({
   credentials: true,
-  origin: [ "http://localhost:3000" ]
+  origin: ["http://localhost:3000"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,8 +46,33 @@ io.on("connection", socket => {
   })
 
   socket.on("cart", (food) => {
-    console.log(food);
+    // console.log(food);
 
+
+
+    const saveOrder = async (food) => {
+      // console.log(food[0].time)
+      try {
+        const number = await OrderModel.countDocuments();
+        console.log(number);
+        OrderModel.create({
+          numberOrder: number + 1,
+          order: food,
+          tempoTotalInicial: food[0].time,
+          tempoTotalRestante: food[0].time
+        })
+          .then(resp => {
+            console.log(resp)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } catch (error) {
+        console.log(error);
+      }
+      // 
+    }
+    saveOrder(food);
   })
 
 
@@ -56,4 +84,4 @@ io.on("connection", socket => {
 
 // server.listen(5000);
 
-module.exports = {server};
+module.exports = { server };

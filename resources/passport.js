@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const {GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET} = process.env;
+const { GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET } = process.env;
 const { UserModel } = require("../models/user");
 
 const gmailAuthPassport = passport.use(
@@ -10,34 +10,36 @@ const gmailAuthPassport = passport.use(
       clientSecret: GOOGLE_OAUTH_CLIENT_SECRET,
       callbackURL: "/auth/google/callback"
     },
-    (accessToken, refreshToken, profile, done) => {
-      // console.log(accessToken)
+    (accessToken, refreshToken, params, profile, done) => {
+      console.log('Token', params.id_token)
+      console.log('Token', accessToken)
+      console.log('Token', refreshToken)
       UserModel.findOne({ email: profile._json.email })
-      .then(user => {
-        if (user) {
-          done(null, user);
-          return
-        } else {
-          UserModel.create({
-            name: profile._json.name,
-            email: profile._json.email,
-            picture: profile._json.picture,
-            locale: profile._json.locale,
-            authType: ["Google"],
-            password:'',
-            token: accessToken
-          })
-          .then(user => {
-           done(null, user);
-           return
-          })
-          .catch(err => {
-            console.log(err);
-          });
-        }
-    })
-  }
-));
+        .then(user => {
+          if (user) {
+            done(null, user);
+            return
+          } else {
+            UserModel.create({
+              name: profile._json.name,
+              email: profile._json.email,
+              picture: profile._json.picture,
+              locale: profile._json.locale,
+              authType: ["Google"],
+              password: '',
+              token: params.id_token
+            })
+              .then(user => {
+                done(null, user);
+                return
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        })
+    }
+  ));
 
 
 gmailAuthPassport.serializeUser((user, cb) => {
@@ -47,4 +49,4 @@ gmailAuthPassport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
-module.exports = {gmailAuthPassport}
+module.exports = { gmailAuthPassport }

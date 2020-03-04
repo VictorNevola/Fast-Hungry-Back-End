@@ -11,6 +11,7 @@ const gmailAuthPassport = passport.use(
       callbackURL: "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
+      // console.log(accessToken)
       UserModel.findOne({ email: profile._json.email })
       .then(user => {
         if (user) {
@@ -23,7 +24,8 @@ const gmailAuthPassport = passport.use(
             picture: profile._json.picture,
             locale: profile._json.locale,
             authType: ["Google"],
-            password:''
+            password:'',
+            token: accessToken
           })
           .then(user => {
            done(null, user);

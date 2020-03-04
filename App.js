@@ -29,11 +29,12 @@ const io = socketIo(server);
 io.on("connection", socket => {
 
   console.log("New client", socket.id);
-  // io.emit('up', { message: 'teste'});
+  io.emit('up', { message: 'teste'});
   // Colocar uma função que o usuário chama quando finalizar o pedido e que manda o pedido para outra função que só a cozinha vai receber está ouvindo
   // exemplo https://www.freecodecamp.org/news/how-to-create-a-realtime-app-using-socket-io-react-node-mongodb-a10c4a1ab676/
 
   socket.on("log", (user) => {
+    // chamar isso com nome do user para atrelar os dados
     clients[socket.id] = user;
     const message = `Hello from ${clients[socket.id]}`
     socket.broadcast.emit('up', message);
@@ -47,9 +48,6 @@ io.on("connection", socket => {
 
   socket.on("cart", (food) => {
     // console.log(food);
-
-
-
     const saveOrder = async (food) => {
       // console.log(food[0].time)
       try {

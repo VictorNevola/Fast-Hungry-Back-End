@@ -33,4 +33,22 @@ const userAuthentication = (request, response) => {
 
 }
 
+const googleToken = (req, res) => {
+    const userObject = {
+        email: req.body.email,
+        password: req.body.password,
+    };
+
+    UserModel.findOne({ 'email': userObject.email })
+        .then((user) => {
+            if (!user) {
+                response.status(400).json({ message: "Usuario nao cadastrado ;_;" });
+                return;
+            }
+        })
+        .catch((err) => {
+            console.log('Deu muito Ruim', err)
+        })
+}
+
 module.exports = userAuthentication;

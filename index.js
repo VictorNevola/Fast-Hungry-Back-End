@@ -2,7 +2,7 @@ require('dotenv').config();
 const {server} = require('./App.js');
 const {PORT} = process.env;
 
-server.listen(5000, (error)=>{
+server.listen(PORT, (error)=>{
     if(error){
         console.log(error);
     }

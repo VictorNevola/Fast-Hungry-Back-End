@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder} = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder } = require('../controllers/index');
 
 
 
@@ -20,29 +20,7 @@ router.get("/auth/google", gmailAuthPassport.authenticate("google",
 router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
   { scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"] }),
   (request, response) => {
-    const user = request._passport.session.user;
-    console.log('user',user)
-    console.log('token',request.session.token)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.session)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.instance)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.Authenticator)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.instance.Authenticator)
-    console.log('SESSION', request._passport.session)
-    console.log('SESSION', request._passport.session.user)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport)
-    sendEmail(user)
-      .then(sucess => {
-        // console.log(`############# iuhuuuhuhuhuhlllllll`, sucess)
-        // response.send(sucess)
-        response.redirect('http://localhost:3000/category');
-        // response.send('<script>window.close()</script>')
-      })
-      .catch(err => {
-        // console.log('@@@@@@@@@@ -- error', err.response.body)
-      })
-
-
-    console.log('rota', user)
+    response.redirect('https://fomerapida.herokuapp.com/category');x
   });
 //rota para cadastro aplicação
 router.post("/createUser/aplication", createUser);

@@ -15,7 +15,7 @@ const { OrderModel } = require("./models/order");
 mongoConnect();
 app.use(cors({
   credentials: true,
-  origin: ["http://localhost:3000"]
+  origin: ["https://fomerapida.herokuapp.com/"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,13 +23,10 @@ app.use(cookieParser());
 app.use(router);
 
 const io = socketIo(server);
-// const socket = require('./controllers/socket/socketConnection')
-// socket.start(io);
-
 io.on("connection", socket => {
 
   console.log("New client", socket.id);
-  io.emit('up', { message: 'teste'});
+  io.emit('up', { message: 'teste' });
   // Colocar uma função que o usuário chama quando finalizar o pedido e que manda o pedido para outra função que só a cozinha vai receber está ouvindo
   // exemplo https://www.freecodecamp.org/news/how-to-create-a-realtime-app-using-socket-io-react-node-mongodb-a10c4a1ab676/
 
@@ -47,9 +44,7 @@ io.on("connection", socket => {
   })
 
   socket.on("cart", (food) => {
-    // console.log(food);
     const saveOrder = async (food) => {
-      // console.log(food[0].time)
       try {
         const number = await OrderModel.countDocuments();
         console.log(number);
@@ -69,7 +64,6 @@ io.on("connection", socket => {
       } catch (error) {
         console.log(error);
       }
-      // 
     }
     saveOrder(food);
   })

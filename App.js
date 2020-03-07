@@ -15,7 +15,8 @@ const { OrderModel } = require("./models/order");
 mongoConnect();
 app.use(cors({
   credentials: true,
-  origin: ["https://fomerapida.herokuapp.com/"]
+  // origin: ["https://fomerapida.herokuapp.com/"]
+  origin: ["http://localhost:3000/"]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,8 +24,8 @@ app.use(cookieParser());
 app.use(router);
 
 const io = socketIo(server);
+let clients = {};
 io.on("connection", socket => {
-
   console.log("New client", socket.id);
   io.emit('up', { message: 'teste' });
   // Colocar uma função que o usuário chama quando finalizar o pedido e que manda o pedido para outra função que só a cozinha vai receber está ouvindo
@@ -32,6 +33,7 @@ io.on("connection", socket => {
 
   socket.on("log", (user) => {
     // chamar isso com nome do user para atrelar os dados
+      
     clients[socket.id] = user;
     const message = `Hello from ${clients[socket.id]}`
     socket.broadcast.emit('up', message);
@@ -47,7 +49,6 @@ io.on("connection", socket => {
     const saveOrder = async (food) => {
       try {
         const number = await OrderModel.countDocuments();
-        console.log(number);
         OrderModel.create({
           numberOrder: number + 1,
           order: food,

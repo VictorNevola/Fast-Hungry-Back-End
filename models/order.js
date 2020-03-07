@@ -10,12 +10,6 @@ const OrderSchema = new Schema({
   tempoTotalInicial: String,
   tempoTotalRestante: String,
   mesa: {type: String, default: 'bancada'}
-  // data: new Date().toString()
-  // category: String,
-  // name: Number,
-  // price: Number,
-  // quantity: Number,
-  // time: String
 })
 
 

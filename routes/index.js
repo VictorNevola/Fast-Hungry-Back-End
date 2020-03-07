@@ -20,7 +20,8 @@ router.get("/auth/google", gmailAuthPassport.authenticate("google",
 router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
   { scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"] }),
   (request, response) => {
-    response.redirect('https://fomerapida.herokuapp.com/category');x
+    response.redirect('http://localhost:3000/category');
+
   });
 //rota para cadastro aplicação
 router.post("/createUser/aplication", createUser);

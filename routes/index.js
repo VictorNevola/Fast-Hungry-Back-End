@@ -7,6 +7,7 @@ const { createUser, userAuthentication, updateUser, socket, saveOrder, Payment, 
 
 
 
+
 router.use(gmailAuthPassport.initialize());
 
 router.get("/", (req, res) => {
@@ -22,15 +23,6 @@ router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
   { scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"] }),
   (request, response) => {
     const user = request._passport.session.user;
-    console.log('user',user)
-    console.log('token',request.session.token)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.session)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.instance)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.Authenticator)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport.instance.Authenticator)
-    console.log('SESSION', request._passport.session)
-    console.log('SESSION', request._passport.session.user)
-    console.log('aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', request._passport)
     sendEmail(user)
       .then(sucess => {
         // console.log(`############# iuhuuuhuhuhuhlllllll`, sucess)
@@ -42,9 +34,6 @@ router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
       .catch(err => {
         // console.log('@@@@@@@@@@ -- error', err.response.body)
       })
-
-
-    console.log('rota', user)
   });
 //rota para cadastro aplicação
 router.post("/createUser/aplication", createUser);

@@ -43,7 +43,7 @@ io.on("connection", socket => {
 
   socket.on("cart", (food) => {
     let bigTime = "0:00";
-    food.map(iten => {
+    food.cart.map(iten => {
       iten.status = 'realizando';
       if(iten.time > bigTime){
         bigTime = iten.time;

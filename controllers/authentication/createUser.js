@@ -5,8 +5,6 @@ const bcryptSalt = 10;
 
 const createUser = (request, response) => {
 
-    console.log(request.body);
-
     const userObject = {
         name: request.body.name,
         email: request.body.email,

@@ -13,51 +13,53 @@ const { OrderModel } = require("./models/order");
 
 
 mongoConnect();
-app.use(cors({
-  credentials: true,
-  // origin: ["https://fomerapida.herokuapp.com/"]
-  origin: ["http://localhost:3000/"]
-}));
+// app.use(cors({
+//   credentials: true,
+//   // origin: ["https://fomerapida.herokuapp.com/"]
+//   origin: ["http://localhost:3000/"]
+// }));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(router);
 
 const io = socketIo(server);
-let clients = {};
-io.on("connection", socket => {
-  console.log("New client", socket.id);
-  io.emit('up', { message: 'teste' });
-  // Colocar uma função que o usuário chama quando finalizar o pedido e que manda o pedido para outra função que só a cozinha vai receber está ouvindo
-  // exemplo https://www.freecodecamp.org/news/how-to-create-a-realtime-app-using-socket-io-react-node-mongodb-a10c4a1ab676/
 
-  socket.on("log", (user) => {
-    // chamar isso com nome do user para atrelar os dados
-      
-    clients[socket.id] = user;
-    const message = `Hello from ${clients[socket.id]}`
-    socket.broadcast.emit('up', message);
+let clients = {};
+
+io.on("connection", socket => {
+  socket.on("userLogin", (user) => {
+    let id = socket.id;
+    clients[id] = user;
+    const message1 = clients[socket.id]
+    io.sockets.emit(`table`, clients[socket.id]);
   })
 
   socket.on("hello", (hello) => {
-    console.log(`hello from server`);
     const message = `Hello from ${clients[socket.id]}`
     io.sockets.emit(`hello`, message);
   })
 
   socket.on("cart", (food) => {
+    let bigTime = "0:00";
+    food.map(iten => {
+      iten.status = 'realizando';
+      if(iten.time > bigTime){
+        bigTime = iten.time;
+      }
+    });
     const saveOrder = async (food) => {
       try {
         const number = await OrderModel.countDocuments();
         OrderModel.create({
           numberOrder: number + 1,
           order: food,
-          tempoTotalInicial: food[0].time,
-          tempoTotalRestante: food[0].time,
+          tempoTotalInicial: bigTime,
+          tempoTotalRestante: bigTime,
         })
           .then(resp => {
-            io.sockets.emit('order', resp)
-            console.log(resp)
+            io.sockets.emit('orders', resp)
           })
           .catch(error => {
             console.log(error)
@@ -71,7 +73,9 @@ io.on("connection", socket => {
 
 
   socket.on("disconnect", () => {
-    console.log("user disco");
+    const user = socket.id
+    delete clients[user];
+    io.sockets.emit(`offline`, clients);
   });
 
 });

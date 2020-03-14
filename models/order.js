@@ -9,7 +9,7 @@ const OrderSchema = new Schema({
   statusPedido:  { type: String, default: 'realizado'},
   tempoTotalInicial: String,
   tempoTotalRestante: String,
-  mesa: {type: String, default: 'bancada'}
+  mesa: {type: String, default: 'bancada'},
 })
 
 

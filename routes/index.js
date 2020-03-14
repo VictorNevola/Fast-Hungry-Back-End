@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder } = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder, updateOrder } = require('../controllers/index');
 
 
 
@@ -29,6 +29,8 @@ router.post("/createUser/aplication", createUser);
 router.post("/user-authentication", userAuthentication);
 //rota para inserir caso o usario seja cadastrado pelo gmail
 router.get("/user-gmail/password-update-aplication", updateUser);
+//rota para atualizar pedido
+router.put("/update-order", updateOrder);
 
 // fluxo de logout
 router.get('/auth/logout', (req, res) => {

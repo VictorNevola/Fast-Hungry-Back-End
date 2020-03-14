@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder} = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder, Payment, paid, findFood, auth} = require('../controllers/index');
 
 
 
@@ -34,7 +35,8 @@ router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
       .then(sucess => {
         // console.log(`############# iuhuuuhuhuhuhlllllll`, sucess)
         // response.send(sucess)
-        response.redirect('http://localhost:3000/category');
+        const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET,  {expiresIn: '2d'});
+        response.redirect(`${process.env.FRONT_URL}/category?id=${user._id}&auth=${token}`);
         // response.send('<script>window.close()</script>')
       })
       .catch(err => {
@@ -50,6 +52,14 @@ router.post("/createUser/aplication", createUser);
 router.post("/user-authentication", userAuthentication);
 //rota para inserir caso o usario seja cadastrado pelo gmail
 router.get("/user-gmail/password-update-aplication", updateUser);
+
+router.post("/payment", Payment);
+
+router.post("/paidorders", paid);
+
+router.post("/findfood", findFood);
+
+router.post ("/auth", auth);
 
 // fluxo de logout
 router.get('/auth/logout', (req, res) => {

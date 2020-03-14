@@ -15,7 +15,7 @@ const { OrderModel } = require("./models/order");
 mongoConnect();
 app.use(cors({
   credentials: true,
-  origin: ["http://localhost:3000"]
+  origin: [process.env.FRONT_URL]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

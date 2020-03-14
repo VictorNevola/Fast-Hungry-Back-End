@@ -56,7 +56,7 @@ io.on("connection", socket => {
           clientId: food.id,
           numberOrder: number + 1,
           table: food.mesa,
-          order: food,
+          order: food.cart,
           tempoTotalInicial: bigTime,
           tempoTotalRestante: bigTime,
         })

@@ -22,10 +22,6 @@ router.get("/auth/google", gmailAuthPassport.authenticate("google",
 router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
   { scope: ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"] }),
   (request, response) => {
-<<<<<<< HEAD
-    response.redirect('http://localhost:3000/category');
-
-=======
     const user = request._passport.session.user;
     sendEmail(user)
       .then(sucess => {
@@ -38,7 +34,6 @@ router.get('/auth/google/callback', gmailAuthPassport.authenticate('google',
       .catch(err => {
         // console.log('@@@@@@@@@@ -- error', err.response.body)
       })
->>>>>>> d8d35e2d3fcda527cd010451a8c8da00a487452e
   });
 //rota para cadastro aplicação
 router.post("/createUser/aplication", createUser);

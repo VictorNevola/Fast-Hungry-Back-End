@@ -56,16 +56,17 @@ io.on("connection", socket => {
     // console.log('IIIIIIIDDDDD',socket.id);
     // console.log(clients)
     // console.log(clients[socket.id])
-    console.log('fooooooooooooooooooooooooood',food)
+    // console.log('fooooooooooooooooooooooooood',food)
     const saveOrder = async (food) => {
       // console.log(food[0].time)
       try {
         const number = await OrderModel.countDocuments();
-        console.log(number);
+        console.log(food.mesa);
+        console.log(food);
         OrderModel.create({
           clientId: food.id,
           numberOrder: number + 1,
-          table: food.mesa,
+          mesa: food.mesa,
           order: food.cart,
           tempoTotalInicial: food.cart[0].time,
           tempoTotalRestante: food.cart[0].time,

@@ -23,8 +23,6 @@ app.use(cookieParser());
 app.use(router);
 
 const io = socketIo(server);
-// const socket = require('./controllers/socket/socketConnection')
-// socket.start(io);
 
 let clients = {};
 
@@ -32,8 +30,6 @@ io.on("connection", socket => {
 
   console.log("New client", socket.id);
   io.emit('up', { message: 'teste'});
-  // exemplo https://www.freecodecamp.org/news/how-to-create-a-realtime-app-using-socket-io-react-node-mongodb-a10c4a1ab676/
-
   socket.on("log", (user) => {
     // chamar isso com nome do user para atrelar os dados
     let id = socket.id; 
@@ -57,7 +53,6 @@ io.on("connection", socket => {
     // console.log(clients[socket.id])
     console.log('fooooooooooooooooooooooooood',food)
     const saveOrder = async (food) => {
-      // console.log(food[0].time)
       try {
         const number = await OrderModel.countDocuments();
         console.log(number);

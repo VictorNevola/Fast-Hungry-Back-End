@@ -42,6 +42,7 @@ io.on("connection", socket => {
   })
 
   socket.on("cart", (food) => {
+<<<<<<< HEAD
     let bigTime = "0:00";
     food.map(iten => {
       iten.status = 'realizando';
@@ -49,17 +50,35 @@ io.on("connection", socket => {
         bigTime = iten.time;
       }
     });
+=======
+    // console.log('IIIIIIIDDDDD',socket.id);
+    // console.log(clients)
+    // console.log(clients[socket.id])
+    console.log('fooooooooooooooooooooooooood',food)
+>>>>>>> d8d35e2d3fcda527cd010451a8c8da00a487452e
     const saveOrder = async (food) => {
       try {
         const number = await OrderModel.countDocuments();
         OrderModel.create({
+          clientId: food.id,
           numberOrder: number + 1,
+<<<<<<< HEAD
           order: food,
           tempoTotalInicial: bigTime,
           tempoTotalRestante: bigTime,
         })
           .then(resp => {
             io.sockets.emit('orders', resp)
+=======
+          table: food.mesa,
+          order: food.cart,
+          tempoTotalInicial: food.cart[0].time,
+          tempoTotalRestante: food.cart[0].time,
+        })
+          .then(resp => {
+            io.sockets.emit('orders', resp)
+            console.log('resppppppppp',resp)
+>>>>>>> d8d35e2d3fcda527cd010451a8c8da00a487452e
           })
           .catch(error => {
             console.log(error)

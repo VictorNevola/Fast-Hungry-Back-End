@@ -1,5 +1,6 @@
 const { UserModel } = require('../../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userAuthentication = (request, response) => {
 
@@ -22,7 +23,9 @@ const userAuthentication = (request, response) => {
             })
 
             if (bcrypt.compareSync(userObject.password, user.password)) {
-                response.status(200).json({ message: "Usuario logado" });
+                const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET,  {expiresIn: '1d'});
+                // response.header('auth', token).status(200).json({ message: "Usuario logado" });
+                response.header('auth', token).status(200).send(token);
             } else {
                 response.status(403).json({ message: "Senha incorreta" });
             }

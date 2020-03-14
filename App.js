@@ -16,7 +16,7 @@ mongoConnect();
 app.use(cors({
   credentials: true,
   origin: [process.env.FRONT_URL]
-})); 
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

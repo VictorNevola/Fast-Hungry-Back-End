@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth} = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct} = require('../controllers/index');
 
 
 
@@ -43,6 +43,14 @@ router.post("/user-authentication", userAuthentication);
 router.get("/user-gmail/password-update-aplication", updateUser);
 //rota para atualizar pedido
 router.put("/update-order", updateOrder);
+//rota para Pegas todas categorias
+router.get('/AllCategory', listAllCategory);
+//rota para inserir Categoria
+router.post('/newCategory', createCategory);
+//Rota para listar todos os produtos
+router.get('/AllProducts', listAllProduct);
+//Rota para inserir produtos
+router.post('/newProduct', createProduct);
 
 router.post("/payment", Payment);
 

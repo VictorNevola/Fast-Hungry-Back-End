@@ -43,7 +43,7 @@ io.on("connection", socket => {
     const message1 = clients[socket.id]
     // socket.broadcast.emit('table', message1);
     io.sockets.emit(`table`, clients[socket.id]);
-    console.log(clients)
+    console.log(clients)  
   })
 
   socket.on("hello", (hello) => {

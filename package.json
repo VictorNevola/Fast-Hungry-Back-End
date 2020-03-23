@@ -30,7 +30,7 @@
     "mongoose": "^5.8.11",
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
-    "pagarme": "^4.7.0",
+    "pagarme": "^4.7.1",
     "passport": "^0.4.1",
     "passport-anonymous": "^1.0.1",
     "passport-google-oauth20": "^2.0.0",

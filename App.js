@@ -15,6 +15,7 @@ const { OrderModel } = require("./models/order");
 mongoConnect();
 // app.use(cors({
 //   credentials: true,
+//   origin: [process.env.FRONT_URL]
 //   // origin: ["https://fomerapida.herokuapp.com/"]
 //   origin: ["http://localhost:3000/"]
 // }));
@@ -55,7 +56,7 @@ io.on("connection", socket => {
         OrderModel.create({
           clientId: food.id,
           numberOrder: number + 1,
-          table: food.mesa,
+          mesa: food.mesa,
           order: food.cart,
           tempoTotalInicial: bigTime,
           tempoTotalRestante: bigTime,

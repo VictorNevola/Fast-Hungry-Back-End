@@ -1,8 +1,11 @@
 const {ProductModel} = require("../../models/product");
 
 
-const listAllProduct = (request, response) => {    
-    ProductModel.find({})
+const listAllProduct = (request, response) => {   
+    console.log(request.body)
+    const category = request.body.category;
+    
+    ProductModel.find({category: category})
     .then((succes)=> {
         response.status(200).json(succes);
     })

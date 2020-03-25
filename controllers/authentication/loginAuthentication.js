@@ -23,7 +23,7 @@ const userAuthentication = (request, response) => {
             })
 
             if (bcrypt.compareSync(userObject.password, user.password)) {
-                const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET,  {expiresIn: '1d'});
+                const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET,  {expiresIn: 60*60*24});
                 // response.header('auth', token).status(200).json({ message: "Usuario logado" });
                 response.header('auth', token).status(200).send(token);
             } else {

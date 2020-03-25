@@ -2,7 +2,8 @@ const { OrderModel } = require("../../models/order");
 
 const paid = (req, res) => {
   const id = req.body.id;
-  OrderModel.find({ clientId: id, concluido: true, })
+  console.log(req.body)
+  OrderModel.find({ clientId: id})
   //colocar pago: true
     .then(resp => {
       // console.log(resp)

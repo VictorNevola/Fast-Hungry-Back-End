@@ -34,6 +34,7 @@ io.on("connection", socket => {
     let id = socket.id;
     clients[id] = user;
     const message1 = clients[socket.id]
+    console.log('clients',clients)
     io.sockets.emit(`table`, clients[socket.id]);
   })
 
@@ -72,6 +73,16 @@ io.on("connection", socket => {
       }
     }
     saveOrder(food);
+  })
+
+  socket.on("orderLate", (res) => {
+    console.log(res.data)
+    io.sockets.emit('updateOrder', res.data)
+  })
+
+  socket.on("orderFinished", (res) => {
+    console.log(res.data)
+    io.sockets.emit('updateOrder', res.data)
   })
 
 

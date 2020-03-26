@@ -48,7 +48,7 @@ router.get('/AllCategory', listAllCategory);
 //rota para inserir Categoria
 router.post('/newCategory', createCategory);
 //Rota para listar todos os produtos
-router.get('/AllProducts', listAllProduct);
+router.post('/AllProducts', listAllProduct);
 //Rota para inserir produtos
 router.post('/newProduct', createProduct);
 //Rota para listar os produtos por categoria

@@ -15,6 +15,7 @@ const { OrderModel } = require("./models/order");
 mongoConnect();
 // app.use(cors({
 //   credentials: true,
+//   origin: [process.env.FRONT_URL]
 //   // origin: ["https://fomerapida.herokuapp.com/"]
 //   origin: ["http://localhost:3000/"]
 // }));
@@ -33,6 +34,7 @@ io.on("connection", socket => {
     let id = socket.id;
     clients[id] = user;
     const message1 = clients[socket.id]
+    console.log('clients',clients)
     io.sockets.emit(`table`, clients[socket.id]);
   })
 
@@ -55,7 +57,7 @@ io.on("connection", socket => {
         OrderModel.create({
           clientId: food.id,
           numberOrder: number + 1,
-          table: food.mesa,
+          mesa: food.mesa,
           order: food.cart,
           tempoTotalInicial: bigTime,
           tempoTotalRestante: bigTime,
@@ -71,6 +73,16 @@ io.on("connection", socket => {
       }
     }
     saveOrder(food);
+  })
+
+  socket.on("orderLate", (res) => {
+    console.log(res.data)
+    io.sockets.emit('updateOrder', res.data)
+  })
+
+  socket.on("orderFinished", (res) => {
+    console.log(res.data)
+    io.sockets.emit('updateOrder', res.data)
   })
 
 

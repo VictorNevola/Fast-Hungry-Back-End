@@ -41,7 +41,7 @@ const Payment = (request, reponse) => {
       //   },
       //   "items": props.state.cart
       // }))
-      "amount": preco,
+      "amount": 100,
       "card_number": card,
       "card_cvv": cvv,
       "card_expiration_date": expDate,

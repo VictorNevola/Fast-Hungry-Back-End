@@ -45,7 +45,6 @@ const Payment = (request, response) => {
     .catch(error => {
       console.log(error)
     })
-
 }
 
 

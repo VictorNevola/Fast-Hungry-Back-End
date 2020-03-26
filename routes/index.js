@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct} = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct, Payment2} = require('../controllers/index');
 
 
 
@@ -53,6 +53,8 @@ router.post('/AllProducts', listAllProduct);
 router.post('/newProduct', createProduct);
 
 router.post("/payment", Payment);
+
+router.post("/payment2", Payment2);
 
 router.post("/paidorders", paid);
 

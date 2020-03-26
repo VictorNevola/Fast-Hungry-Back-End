@@ -12,5 +12,6 @@ const createCategory = require('./categorys/addNewCategory');
 const listAllCategory = require('./categorys//listAllCategory');
 const createProduct = require('./products/addNewProduct');
 const listAllProduct = require('./products/listAllProduct');
-module.exports = {createUser, userAuthentication, updateUser, socket, saveOrder, updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct};
+const listAllProductCategory = require('./products/listAllProductCategory');
+module.exports = {createUser, userAuthentication, updateUser, socket, saveOrder, updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct, listAllProductCategory};
 

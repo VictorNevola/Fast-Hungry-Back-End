@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { gmailAuthPassport } = require("../resources/passport");
 const sendEmail = require('../resources/email');
-const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct} = require('../controllers/index');
+const { createUser, userAuthentication, updateUser, socket, saveOrder,updateOrder, Payment, paid, findFood, auth, createCategory, listAllCategory, createProduct, listAllProduct, listAllProductCategory} = require('../controllers/index');
 
 
 
@@ -51,6 +51,8 @@ router.post('/newCategory', createCategory);
 router.get('/AllProducts', listAllProduct);
 //Rota para inserir produtos
 router.post('/newProduct', createProduct);
+//Rota para listar os produtos por categoria
+router.get('/listProducts', listAllProductCategory);
 
 router.post("/payment", Payment);
 

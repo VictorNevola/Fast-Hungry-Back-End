@@ -52,7 +52,7 @@ router.get('/AllProducts', listAllProduct);
 //Rota para inserir produtos
 router.post('/newProduct', createProduct);
 //Rota para listar os produtos por categoria
-router.get('/listProducts', listAllProductCategory);
+router.post('/listProducts', listAllProductCategory);
 
 router.post("/payment", Payment);
 

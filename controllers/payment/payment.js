@@ -18,19 +18,33 @@ const Payment = (request, response) => {
   pagarme.client.connect({ api_key: process.env.PAGARME_KEY })
     .then(client => client.transactions.create({
       amount: 1000,
-      card_number: '4111111111111111',
-      card_holder_name: 'abc',
-      card_expiration_date: '1225',
-      card_cvv: '123',
+      card_number: card,
+      card_holder_name: nome,
+      card_expiration_date: expDate,
+      card_cvv: cvv,
     }))
-    .then(resp => {
-      console.log(resp)
-      response.send('foi')
+    .then(transaction => {
+      console.log(transaction)
+      // response.send('foi')
+      OrderModel.findByIdAndUpdate( {_id: orderId},
+                { pago: true, pagamento: transaction},
+                { upsert: false},
+                function(err, result) {
+                  if(err){
+                    console.log(err)
+                  } else {
+                    console.log(result)
+                  }
+                })
+                .then((user) => {
+                  console.log(user)
+                })
+                .catch(error => console.log(error))
+              response.status(200).send(transaction);
     })
     .catch(error => {
       console.log(error)
     })
-
 }
 
 
